@@ -4,6 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grand Pakis Residence 3</title>
+
+<!-- META PIXEL CODE -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];
+t=b.createElement(e);t.async=!0;
+t.src=v;
+s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}
+(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1563542851391254');
+fbq('track', 'PageView');
+fbq('track', 'ViewContent');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1563542851391254&ev=PageView&noscript=1"/>
+</noscript>
+<!-- END META PIXEL CODE -->
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -246,18 +271,39 @@ footer{
 
 <script>
 function scrollToForm(){
-    document.getElementById("form").scrollIntoView({behavior:"smooth"});
+document.getElementById("form").scrollIntoView({behavior:"smooth"});
 }
 
-function sendToWhatsApp(e){
-    e.preventDefault();
-    var nama=document.getElementById("nama").value;
-    var hp=document.getElementById("hp").value;
-    var budget=document.getElementById("budget").value;
-    var pembayaran=document.getElementById("pembayaran").value;
-    var waktu=document.getElementById("waktu").value;
+/* ===== AUTO HIDE CTA SAAT FORM TERLIHAT ===== */
+const formSection = document.getElementById("form");
+const floatingCTA = document.getElementById("floatingCTA");
 
-    var message=`Halo, saya tertarik dengan Grand Pakis Residence 3.
+const observer = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+floatingCTA.classList.add("hide");
+}else{
+floatingCTA.classList.remove("hide");
+}
+});
+},{threshold:0.3});
+
+observer.observe(formSection);
+
+/* ===== WHATSAPP + LEAD TRACKING ===== */
+function sendToWhatsApp(e){
+e.preventDefault();
+
+var nama=document.getElementById("nama").value;
+var hp=document.getElementById("hp").value;
+var budget=document.getElementById("budget").value;
+var pembayaran=document.getElementById("pembayaran").value;
+var waktu=document.getElementById("waktu").value;
+
+/* TRACK LEAD KE META */
+fbq('track', 'Lead');
+
+var message=`Halo, saya tertarik dengan Grand Pakis Residence 3.
 
 Nama: ${nama}
 No HP: ${hp}
@@ -265,8 +311,8 @@ Budget: ${budget}
 Pembayaran: ${pembayaran}
 Rencana Beli: ${waktu}`;
 
-    var url="https://wa.me/6281802168184?text="+encodeURIComponent(message);
-    window.open(url,"_blank");
+var url="https://wa.me/6281802168184?text="+encodeURIComponent(message);
+window.open(url,"_blank");
 }
 </script>
 
